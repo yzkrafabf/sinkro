@@ -1,6 +1,6 @@
 <?php
 include 'db.php';
-$data = json_decode($_POST['pedido'], true);
+$data = !empty($_POST['pedido']) ? json_decode($_POST['pedido'], true) : [];$nombre = $_POST['nombre'];
 $nombre = $_POST['nombre'];
 $telefono = $_POST['telefono'];
 $folio = 'PED-' . str_pad(rand(1, 99999), 5, '0', STR_PAD_LEFT);
