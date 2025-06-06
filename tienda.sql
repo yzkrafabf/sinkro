@@ -1,3 +1,6 @@
+DROP DATABASE IF EXISTS tienda;
+CREATE DATABASE tienda CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE tienda;
 
 CREATE TABLE IF NOT EXISTS productos (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -5,6 +8,7 @@ CREATE TABLE IF NOT EXISTS productos (
     precio DECIMAL(10,2),
     imagen VARCHAR(100)
 );
+
 CREATE TABLE IF NOT EXISTS pedidos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre_cliente VARCHAR(100),
@@ -13,14 +17,16 @@ CREATE TABLE IF NOT EXISTS pedidos (
     fecha DATETIME,
     total DECIMAL(10,2)
 );
+
 CREATE TABLE IF NOT EXISTS detalle_pedido (
     id INT AUTO_INCREMENT PRIMARY KEY,
     pedido_id INT,
     producto_id INT,
     cantidad INT,
-    FOREIGN KEY (pedido_id) REFERENCES pedidos(id),
+    FOREIGN KEY (pedido_id) REFERENCES pedidos(id) ON DELETE CASCADE,
     FOREIGN KEY (producto_id) REFERENCES productos(id)
 );
+
 INSERT INTO productos (nombre, precio, imagen) VALUES
 ('Producto 1', 10, 'prod1.jpg'),
 ('Producto 2', 11, 'prod2.jpg'),
@@ -42,3 +48,6 @@ INSERT INTO productos (nombre, precio, imagen) VALUES
 ('Producto 18', 27, 'prod18.jpg'),
 ('Producto 19', 28, 'prod19.jpg'),
 ('Producto 20', 29, 'prod20.jpg');
+
+SHOW TABLES;
+SELECT COUNT(*) AS Total_Productos FROM productos;
