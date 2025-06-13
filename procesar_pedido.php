@@ -1,12 +1,13 @@
 <?php
 include 'db.php';
-$data = !empty($_POST['pedido']) ? json_decode($_POST['pedido'], true) : [];$nombre = $_POST['nombre'];
+$data = !empty($_POST['pedido']) ? json_decode($_POST['pedido'], true) : [];
 $nombre = $_POST['nombre'];
 $telefono = $_POST['telefono'];
 $folio = 'PED-' . str_pad(rand(1, 99999), 5, '0', STR_PAD_LEFT);
 $total = 0;
 
-$conn->query("INSERT INTO pedidos (nombre_cliente, telefono, folio, fecha, total) VALUES ('$nombre', '$telefono', '$folio', NOW(), 0)");
+// Insertar el pedido con estado_de_orden en proceso
+$conn->query("INSERT INTO pedidos (nombre_cliente, telefono, folio, fecha, total, estado_de_orden) VALUES ('$nombre', '$telefono', '$folio', NOW(), 0, 'en proceso')");
 $pedido_id = $conn->insert_id;
 
 foreach ($data as $item) {
@@ -20,4 +21,3 @@ foreach ($data as $item) {
 }
 $conn->query("UPDATE pedidos SET total = $total WHERE id = $pedido_id");
 echo "¡Pedido generado! Tu folio es: <strong>$folio</strong>";
-?>
