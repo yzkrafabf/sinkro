@@ -16,18 +16,26 @@ foreach ($carrito as $item) {
     $total += $item['precio'] * $item['cantidad'];
 }
 
-$stmt = $conn->prepare("INSERT INTO ordenes (usuario_id, folio, total) VALUES (?, ?, ?)");
+// Inserta la orden con estado_de_orden 'en proceso'
+$stmt = $conn->prepare("INSERT INTO ordenes (usuario_id, folio, total, estado_de_orden) VALUES (?, ?, ?, 'en proceso')");
+if (!$stmt) {
+    die("Error en prepare (ordenes): " . $conn->error);
+}
 $stmt->bind_param("isd", $userId, $folio, $total);
 $stmt->execute();
 $ordenId = $stmt->insert_id;
+$stmt->close();
 
+// Inserta los productos del pedido
 $stmtItems = $conn->prepare("INSERT INTO orden_items (orden_id, producto_id, nombre, precio, cantidad) VALUES (?, ?, ?, ?, ?)");
+if (!$stmtItems) {
+    die("Error en prepare (orden_items): " . $conn->error);
+}
 foreach ($carrito as $item) {
     $stmtItems->bind_param("iisdi", $ordenId, $item['id'], $item['nombre'], $item['precio'], $item['cantidad']);
     $stmtItems->execute();
 }
 $stmtItems->close();
-$stmt->close();
 
 unset($_SESSION['carrito']);
 ?>
@@ -123,7 +131,7 @@ unset($_SESSION['carrito']);
             background-color: #2980b9;
         }
     </style>
-
+</head>
 <body>
     <div class="ticket">
         <h2><i class="fa fa-ticket"></i> Orden de Compra</h2>
@@ -164,6 +172,4 @@ unset($_SESSION['carrito']);
         </div>
     </div>
 </body>
-
-
 </html>
