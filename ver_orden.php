@@ -127,3 +127,8 @@ $items = $stmtItems->get_result();
 </body>
 
 </html>
+        <a href="mis_ordenes.php" class="btn btn-outline-secondary btn-sm btn-back">← Volver a mis órdenes</a>
+    </div>
+</body>
+
+</html>
