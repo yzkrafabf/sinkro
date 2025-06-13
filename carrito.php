@@ -43,7 +43,6 @@ $carrito = $_SESSION['carrito'] ?? [];
                     <td><img src="img/<?php echo $item['imagen']; ?>" width="50"></td>
                     <td><?php echo $item['nombre']; ?></td>
                     <td>$<?php echo $item['precio']; ?></td>
-                    <!-- Dentro del <td> de cantidad -->
                     <td>
                         <div class="d-flex align-items-center gap-2">
                             <button class="btn btn-outline-secondary btn-sm"
@@ -53,7 +52,6 @@ $carrito = $_SESSION['carrito'] ?? [];
                                 onclick="actualizarCantidad(<?php echo $item['id']; ?>, 'incrementar')">+</button>
                         </div>
                     </td>
-
                     <td>$<?php echo $subtotal; ?></td>
                     <td>
                         <button class="btn btn-danger btn-sm" onclick="eliminarProducto(<?php echo $item['id']; ?>)"><i
@@ -72,8 +70,7 @@ $carrito = $_SESSION['carrito'] ?? [];
         </table>
         <button class="btn btn-warning" onclick="vaciarCarrito()">Vaciar Carrito</button>
         <?php endif; ?>
-        <button class="btn btn-success ms-2" onclick="finalizarCompra()">Finalizar Compra</button>
-
+        <button class="btn btn-success ms-2" onclick="finalizarCompra()">Generar Pedido</button>
     </div>
 
     <script>
@@ -91,7 +88,7 @@ $carrito = $_SESSION['carrito'] ?? [];
                     if (data.status === 'ok') {
                         document.getElementById('fila-' + id).remove();
                         alert(data.mensaje);
-                        location.reload(); // Refresca total si deseas mantenerlo actualizado
+                        location.reload();
                     } else {
                         alert(data.mensaje);
                     }
@@ -137,5 +134,4 @@ $carrito = $_SESSION['carrito'] ?? [];
     }
     </script>
 </body>
-
 </html>
