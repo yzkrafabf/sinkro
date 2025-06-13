@@ -51,3 +51,25 @@ INSERT INTO productos (nombre, precio, imagen) VALUES
 
 SHOW TABLES;
 SELECT COUNT(*) AS Total_Productos FROM productos;
+
+
+-- NUEVAS TABLAS 
+
+
+CREATE TABLE ordenes (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  usuario_id INT,
+  folio VARCHAR(20) UNIQUE,
+  total DECIMAL(10,2),
+  fecha DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE orden_items (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  orden_id INT,
+  producto_id INT,
+  nombre VARCHAR(255),
+  precio DECIMAL(10,2),
+  cantidad INT
+);
+
