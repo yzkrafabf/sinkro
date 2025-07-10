@@ -135,3 +135,4 @@ $carrito = $_SESSION['carrito'] ?? [];
     </script>
 </body>
 </html>
+
